@@ -23,7 +23,7 @@ namespace Pendu.wordscontroller {
         }
         private void Start()
         {
-            GetRandomWord();
+            
         }
     }
 }

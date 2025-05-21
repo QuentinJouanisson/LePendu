@@ -14,6 +14,18 @@ namespace Pendu.Keyboard
 
         private GridLayoutGroup _gridLayoutGroup;
 
+        public void SetIntteractable(bool state)
+        {
+            foreach(Transform child in keyboardParent)
+            {
+                Button btn =child.GetComponent<Button>();
+                if (btn != null)
+                {
+                    btn.interactable = state;
+                }
+            }
+        }
+
         public Action<char> OnLetterPressed;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()

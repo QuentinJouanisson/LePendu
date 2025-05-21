@@ -4,6 +4,7 @@ using TMPro;
 using Pendu.Keyboard;
 using Pendu.wordscontroller;
 using Pendu.lettermemory;
+using Pendu.inputhandler;
 
 
 public class SplitWordToLetters : MonoBehaviour
@@ -12,51 +13,31 @@ public class SplitWordToLetters : MonoBehaviour
     [SerializeField] private RectTransform letterParent;
     [SerializeField] private GameObject letterPrefab;
     [SerializeField] private LetterMemory letterMemory;
-
-    public VirtualKeyboard virtualKeyboard;
+    [SerializeField] private InputLetterHandler inputLetterHandler;
 
     private List<TextMeshProUGUI> displayedLetters = new();
     private string chosenWord;
-
-    //
     private Dictionary<char, List<int>> letterOccurences = new();
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        virtualKeyboard.OnLetterPressed += HandleLetterInput;
+        InitNewWord(chosenWord);
+    }
+    public void InitNewWord(string word)
+    {
         string chosenWord = wordPicker.GetRandomWord();
         letterMemory.Init(chosenWord);
         SplitWord(chosenWord);
         InstanciateLetters(chosenWord);
-    }
 
-    void HandleLetterInput(char c)
+        inputLetterHandler.OnCorrectLetter += RevealLetter;
+        inputLetterHandler.OnWordCompleted += WordComplete;
+    }
+    void WordComplete()
     {
-        LetterMemory.LetterResult result = letterMemory.TestLetter(c);
-        
-        switch (result)
-        {
-            case LetterMemory.LetterResult.AlreadyTried:
-                Debug.Log($"Lettre deja testee : {c} ");
-                break;
-            case LetterMemory.LetterResult.Correct:
-                RevealLetter(c);
-                Debug.Log($"Lettres correctes {c}");
-                break;
-            case LetterMemory.LetterResult.Incorrect:
-                Debug.Log($"Mauvaises Lettres {c}");
-                break;
-
-        }
-
-        if (letterMemory.IsComplete())
-        {
-            Debug.Log("Mot Complet trouvé");
-        }
-        
-
+        Debug.Log("VICTORY");
     }
-
     public void SplitWord(string word)
     {
         letterOccurences.Clear();
