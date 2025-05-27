@@ -7,23 +7,23 @@ namespace Pendu.wordscontroller {
     public class WordPicker : MonoBehaviour
     {
         [SerializeField] private WordListData wordListData ;
-        
-        public string GetRandomWord()
-        {
-           if (wordListData == null || wordListData.words.Count == 0)
-            {
-                Debug.LogWarning("word list empty");
-                return string.Empty;
-            }
-           int RandomIndex = Random.Range(0, wordListData.words.Count);
-            string chosenWord = wordListData.words[RandomIndex];
 
-            Debug.Log(chosenWord);
-            return chosenWord;
-        }
-        private void Start()
+        private string currentWord;
+
+        public string CurrentWord => currentWord;
+
+        public void PickNewWord()
         {
-            
-        }
+            if (wordListData == null || wordListData.words.Count == 0)
+            {
+                Debug.LogWarning("List is empty");
+                currentWord = string.Empty;
+                return;
+            }
+
+            int randomIndex = Random.Range(0, wordListData.words.Count);
+            currentWord = wordListData.words[randomIndex];
+            Debug.Log($"Mot Choisi : {currentWord}");
+        }        
     }
 }

@@ -37,8 +37,7 @@ namespace Pendu.Visual
         }
         public void IncrementErrors()
         {
-            penduParts[errors].enabled = true;
-            errors++;            
+            penduParts[errors++].enabled = true;           
         }
 
        

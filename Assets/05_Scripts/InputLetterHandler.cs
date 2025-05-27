@@ -40,6 +40,7 @@ namespace Pendu.inputhandler
         {
             Debug.Log("GameOverTriggered");
             gameOverPanel.SetActive(true);
+            virtualKeyboard.OnLetterPressed -= HandleLetter; //desabonne du handle
             virtualKeyboard.SetIntteractable(false);
             virtualKeyboard.gameObject.SetActive(false);
         }
@@ -47,6 +48,7 @@ namespace Pendu.inputhandler
         {
             Debug.Log("VICTORY");
             gameVictoryPanel.SetActive(true);
+            virtualKeyboard.OnLetterPressed -= HandleLetter; //desabonne du handle
             virtualKeyboard.SetIntteractable(false);
         }
 
@@ -67,11 +69,14 @@ namespace Pendu.inputhandler
             }
             if (virtualKeyboard != null)
             {
+                virtualKeyboard.OnLetterPressed -= HandleLetter; //desabonne du handle
+                virtualKeyboard.OnLetterPressed += HandleLetter; //reabonne
                 virtualKeyboard.SetIntteractable(true);
                 virtualKeyboard.gameObject.SetActive(true);
             }
-            string newWord = wordPicker.GetRandomWord();
-            splitWordToLetters.InitNewWord(newWord);
+            wordPicker.PickNewWord();
+            string newWord = wordPicker.CurrentWord;
+            splitWordToLetters.InitNewWord(newWord);            
             letterMemory.Init(newWord);
 
             OnCorrectLetter?.Invoke('\0');

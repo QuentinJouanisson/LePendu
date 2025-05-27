@@ -22,14 +22,17 @@ public class SplitWordToLetters : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        inputLetterHandler.ResetGame();
         InitNewWord(chosenWord);
     }
     public void InitNewWord(string word)
     {
-        string chosenWord = wordPicker.GetRandomWord();
+        //string chosenWord = wordPicker.GetRandomWord();
+        chosenWord = word;
         letterMemory.Init(chosenWord);
         SplitWord(chosenWord);
         InstanciateLetters(chosenWord);
+        Debug.Log("chosen word is" + chosenWord);
 
         inputLetterHandler.OnCorrectLetter += RevealLetter;
         inputLetterHandler.OnWordCompleted += WordComplete;
