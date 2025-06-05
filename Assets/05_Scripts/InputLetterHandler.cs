@@ -4,6 +4,10 @@ using Pendu.Keyboard;
 using System;
 using Pendu.Visual;
 using Pendu.wordscontroller;
+using Pendu.GameSession;
+using PenduAnimation;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 
 namespace Pendu.inputhandler
@@ -27,41 +31,62 @@ namespace Pendu.inputhandler
         public event Action<char> OnIncorrectLetter;
         public event Action<char> OnAlreadyTriedLetter;
         public event Action OnWordCompleted;
+        
+        [SerializeField] private UIAnimator uIAnimator;
 
         private int errorCount = 0;
         
+        public void ShowMenu()
+        {
+            uIAnimator.DrawInGameObjects();
+        }
+        public void HideMenu()
+        {
+            uIAnimator.DrawOutGameObjects();
+        }
+
         void Start()
         {
+            HideMenu();
             virtualKeyboard.OnLetterPressed += HandleLetter;
             gameOverPanel.SetActive(false);
             gameVictoryPanel.SetActive(false);
         }
         private void TriggerGameOver()
         {
+            ShowMenu();
             Debug.Log("GameOverTriggered");
-            gameOverPanel.SetActive(true);
-            virtualKeyboard.OnLetterPressed -= HandleLetter; //desabonne du handle
+            gameOverPanel.SetActive(true);            
+            gameVictoryPanel.SetActive(false);            
             virtualKeyboard.SetIntteractable(false);
             virtualKeyboard.gameObject.SetActive(false);
+            wordPicker.ResetUsedWords();
         }
         private void TriggerVictory()
         {
-            Debug.Log("VICTORY");
+            ShowMenu();
+            gameOverPanel.SetActive(false);
             gameVictoryPanel.SetActive(true);
-            virtualKeyboard.OnLetterPressed -= HandleLetter; //desabonne du handle
+            Debug.Log("VICTORY");
+            gameVictoryPanel.SetActive(true);            
             virtualKeyboard.SetIntteractable(false);
+            GameSessionManager.Instance.RegisterVictory(wordPicker.CurrentWord, errorCount);
         }
 
         public void ResetGame()
         {
+            HideMenu();            
             errorCount = 0;
             
             if(gameOverPanel != null)
             {
-                gameOverPanel.SetActive(false);
-            }if(gameVictoryPanel != null)
+                HideMenu();
+                //gameOverPanel.SetActive(false);
+            }
+            if(gameVictoryPanel != null)
             {
-                gameVictoryPanel.SetActive(false);
+                HideMenu();
+                //gameVictoryPanel.SetActive(false);
             }
             if (hangmanManager != null) 
             {
@@ -74,12 +99,49 @@ namespace Pendu.inputhandler
                 virtualKeyboard.SetIntteractable(true);
                 virtualKeyboard.gameObject.SetActive(true);
             }
+            wordPicker.ResetUsedWords();
             wordPicker.PickNewWord();
             string newWord = wordPicker.CurrentWord;
             splitWordToLetters.InitNewWord(newWord);            
             letterMemory.Init(newWord);
 
             OnCorrectLetter?.Invoke('\0');
+        }
+
+        public void NextWord()
+        {
+            HideMenu();
+            string previousWord = wordPicker.CurrentWord;
+
+            if(gameOverPanel != null)
+            {
+                HideMenu();
+                //gameOverPanel.SetActive(false);
+            }
+            if (gameVictoryPanel != null)
+            {
+                HideMenu();
+                //gameVictoryPanel.SetActive(false);
+            }
+            //if (hangmanManager != null)
+            //{
+            //    hangmanManager.ResetPendu();
+            //}
+            if (virtualKeyboard != null)
+            {
+                virtualKeyboard.OnLetterPressed -= HandleLetter; //desabonne du handle
+                virtualKeyboard.OnLetterPressed += HandleLetter; //reabonne
+                virtualKeyboard.SetIntteractable(true);
+                virtualKeyboard.gameObject.SetActive(true);
+            }
+            wordPicker.PickNewWord();
+            string newWord = wordPicker.CurrentWord;
+            splitWordToLetters.InitNewWord(newWord);
+            letterMemory.Init(newWord);
+
+            OnCorrectLetter?.Invoke('\0');
+
+
         }
         void HandleLetter(char c)
         {

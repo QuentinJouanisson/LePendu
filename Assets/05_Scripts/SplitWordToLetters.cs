@@ -32,10 +32,10 @@ public class SplitWordToLetters : MonoBehaviour
         letterMemory.Init(chosenWord);
         SplitWord(chosenWord);
         InstanciateLetters(chosenWord);
-        Debug.Log("chosen word is" + chosenWord);
+        //Debug.Log("chosen word is" + chosenWord);
 
         inputLetterHandler.OnCorrectLetter += RevealLetter;
-        inputLetterHandler.OnWordCompleted += WordComplete;
+        //inputLetterHandler.OnWordCompleted += WordComplete;
     }
     void WordComplete()
     {
@@ -54,10 +54,10 @@ public class SplitWordToLetters : MonoBehaviour
                 letterOccurences[currentChar] = new List<int>();
             letterOccurences [currentChar].Add(i);
         }
-        foreach (var pair in letterOccurences)
-        {
-            Debug.Log($"Lettre ' {pair.Key}' aux positions : {string.Join(",", pair.Value)}");
-        }
+        //foreach (var pair in letterOccurences)
+        //{
+        //    Debug.Log($"Lettre ' {pair.Key}' aux positions : {string.Join(",", pair.Value)}");
+        //}
     }
     private void InstanciateLetters(string word)
     {

@@ -2,8 +2,11 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 using NUnit.Framework.Internal;
+using Pendu.GameSession;
+using System.Linq;
 
-namespace Pendu.wordscontroller { 
+namespace Pendu.wordscontroller 
+{ 
     public class WordPicker : MonoBehaviour
     {
         [SerializeField] private WordListData wordListData ;
@@ -11,6 +14,9 @@ namespace Pendu.wordscontroller {
         private string currentWord;
 
         public string CurrentWord => currentWord;
+
+        private HashSet<string> usedWords = new();
+              
 
         public void PickNewWord()
         {
@@ -21,9 +27,27 @@ namespace Pendu.wordscontroller {
                 return;
             }
 
-            int randomIndex = Random.Range(0, wordListData.words.Count);
-            currentWord = wordListData.words[randomIndex];
-            Debug.Log($"Mot Choisi : {currentWord}");
-        }        
+            var availableWords = wordListData.words
+                .Where(w => !GameSessionManager.Instance.HasAlreadyPlayed(w))
+                .ToList();
+
+            if (availableWords.Count == 0)
+            {
+                Debug.Log("tous les mots sont joués, reinit");
+                GameSessionManager.Instance.ResetPlayedWords();
+                availableWords = new List<string>(wordListData.words);
+            }
+
+            currentWord = availableWords[Random.Range(0, availableWords.Count)];
+            Debug.Log($"Mot Choisi : {CurrentWord}");
+
+           
+        }
+              
+
+        public void ResetUsedWords()
+        {
+            usedWords.Clear();
+        }
     }
 }

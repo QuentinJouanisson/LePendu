@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: WordsDefault
   m_EditorClassIdentifier: 
   words:
-  - Prems
+  - Un
   - Deux
-  - TRois
+  - Trois

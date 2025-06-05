@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using Pendu.inputhandler;
 using UnityEngine;
+using PenduAnimation;
 
 
 namespace Pendu.Visual
@@ -9,14 +10,15 @@ namespace Pendu.Visual
     public class HangmanManager : MonoBehaviour
     {
         [Header("PenduParts")]
-        [SerializeField] private List<SpriteRenderer> penduParts = new();
+        [SerializeField] private List<SpriteRenderer> penduPartsRender = new();
+        [SerializeField] private AnimatePenduParts animator;
 
         private int errors;
                 
         void Awake()
         {
-            penduParts = new List<SpriteRenderer>(GetComponentsInChildren<SpriteRenderer>());
-            penduParts.RemoveAt(0); //affiche le piedestal
+            penduPartsRender = new List<SpriteRenderer>(GetComponentsInChildren<SpriteRenderer>());
+            penduPartsRender.RemoveAt(0); //Spawn Pedestrial
             ResetPendu();
         }
 
@@ -29,7 +31,7 @@ namespace Pendu.Visual
         public void ResetPendu()
         {
             errors = 0;
-            foreach (SpriteRenderer part in penduParts)
+            foreach (SpriteRenderer part in penduPartsRender)
             {
                 part.enabled = false;
             }
@@ -37,7 +39,16 @@ namespace Pendu.Visual
         }
         public void IncrementErrors()
         {
-            penduParts[errors++].enabled = true;           
+            //penduPartsRender[errors++].enabled = true; // old method
+            if (errors < penduPartsRender.Count)
+            {
+                SpriteRenderer part = penduPartsRender[errors++];
+                part.enabled = true;
+
+                animator.AnimatePenduPart(part.gameObject);
+            }
+
+           
         }
 
        
