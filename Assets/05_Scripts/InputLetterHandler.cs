@@ -80,13 +80,11 @@ namespace Pendu.inputhandler
             
             if(gameOverPanel != null)
             {
-                HideMenu();
-                //gameOverPanel.SetActive(false);
+                HideMenu();                
             }
             if(gameVictoryPanel != null)
             {
-                HideMenu();
-                //gameVictoryPanel.SetActive(false);
+                HideMenu();                
             }
             if (hangmanManager != null) 
             {
@@ -115,18 +113,12 @@ namespace Pendu.inputhandler
 
             if(gameOverPanel != null)
             {
-                HideMenu();
-                //gameOverPanel.SetActive(false);
+                HideMenu();                
             }
             if (gameVictoryPanel != null)
             {
-                HideMenu();
-                //gameVictoryPanel.SetActive(false);
-            }
-            //if (hangmanManager != null)
-            //{
-            //    hangmanManager.ResetPendu();
-            //}
+                HideMenu();                
+            }            
             if (virtualKeyboard != null)
             {
                 virtualKeyboard.OnLetterPressed -= HandleLetter; //desabonne du handle
@@ -167,14 +159,13 @@ namespace Pendu.inputhandler
                     if(errorCount >= maxErrors)
                     {
                         TriggerGameOver();
-                        Debug.Log("Defeated");
-                        
-                        //TriggerGameOver
+                        Debug.Log("Defeated");                                                
                     }
                     break;
 
                 case LetterMemory.LetterResult.AlreadyTried:
                     OnAlreadyTriedLetter?.Invoke(c);
+                    //greyout the letter 
                     break;
             }
         }
