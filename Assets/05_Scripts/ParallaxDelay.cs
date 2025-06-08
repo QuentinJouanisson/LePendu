@@ -24,9 +24,9 @@ namespace LayerAnimation
         }
         private void Start()
         {            
-            AnimateToStart(); //test to rmove
+            //AnimateToStart(); //test to rmove
         }
-        private void InitLayers(Vector3 target)
+        public void InitLayers(Vector3 target)
         {
             foreach (Transform layer in layers)
             layer.position = target;            

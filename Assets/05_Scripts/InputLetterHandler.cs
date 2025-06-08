@@ -8,6 +8,8 @@ using Pendu.GameSession;
 using PenduAnimation;
 using NUnit.Framework;
 using System.Collections.Generic;
+using LayerAnimation;
+
 
 
 namespace Pendu.inputhandler
@@ -24,6 +26,7 @@ namespace Pendu.inputhandler
         [SerializeField] private int maxErrors = 10;
         [SerializeField] private WordPicker wordPicker;
         [SerializeField] private SplitWordToLetters splitWordToLetters;
+        private ParallaxLayerAnimator parallaxLayerAnimator;
         public int MaxErrors => maxErrors;
 
         
@@ -34,27 +37,19 @@ namespace Pendu.inputhandler
         
         [SerializeField] private UIAnimator uIAnimator;
 
-        private int errorCount = 0;
-        
-        public void ShowMenu()
-        {
-            uIAnimator.DrawInGameObjects();
-        }
-        public void HideMenu()
-        {
-            uIAnimator.DrawOutGameObjects();
-        }
-
+        private int errorCount = 0;     
         void Start()
-        {
-            HideMenu();
+        {            
+            //parallaxLayerAnimator.InitLayers();
+            parallaxLayerAnimator.AnimateToStart();
+            uIAnimator.DrawOutGameObjects();
             virtualKeyboard.OnLetterPressed += HandleLetter;
             gameOverPanel.SetActive(false);
             gameVictoryPanel.SetActive(false);
         }
         private void TriggerGameOver()
         {
-            ShowMenu();
+            uIAnimator.DrawInGameObjects();
             Debug.Log("GameOverTriggered");
             gameOverPanel.SetActive(true);            
             gameVictoryPanel.SetActive(false);            
@@ -64,7 +59,7 @@ namespace Pendu.inputhandler
         }
         private void TriggerVictory()
         {
-            ShowMenu();
+            uIAnimator.DrawInGameObjects();
             gameOverPanel.SetActive(false);
             gameVictoryPanel.SetActive(true);
             Debug.Log("VICTORY");
@@ -75,16 +70,16 @@ namespace Pendu.inputhandler
 
         public void ResetGame()
         {
-            HideMenu();            
+            uIAnimator.DrawOutGameObjects();
             errorCount = 0;
             
             if(gameOverPanel != null)
             {
-                HideMenu();                
+                uIAnimator.DrawOutGameObjects();                
             }
             if(gameVictoryPanel != null)
             {
-                HideMenu();                
+                uIAnimator.DrawOutGameObjects();                
             }
             if (hangmanManager != null) 
             {
@@ -108,16 +103,16 @@ namespace Pendu.inputhandler
 
         public void NextWord()
         {
-            HideMenu();
+            uIAnimator.DrawOutGameObjects();
             string previousWord = wordPicker.CurrentWord;
 
             if(gameOverPanel != null)
             {
-                HideMenu();                
+                uIAnimator.DrawOutGameObjects();                
             }
             if (gameVictoryPanel != null)
             {
-                HideMenu();                
+                uIAnimator.DrawOutGameObjects();                
             }            
             if (virtualKeyboard != null)
             {
