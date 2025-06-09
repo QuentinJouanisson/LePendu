@@ -26,7 +26,8 @@ namespace Pendu.inputhandler
         [SerializeField] private int maxErrors = 10;
         [SerializeField] private WordPicker wordPicker;
         [SerializeField] private SplitWordToLetters splitWordToLetters;
-        private ParallaxLayerAnimator parallaxLayerAnimator;
+        [SerializeField] private ParallaxLayerAnimator parallaxLayerAnimator;        
+                
         public int MaxErrors => maxErrors;
 
         
@@ -39,8 +40,7 @@ namespace Pendu.inputhandler
 
         private int errorCount = 0;     
         void Start()
-        {            
-            //parallaxLayerAnimator.InitLayers();
+        {
             parallaxLayerAnimator.AnimateToStart();
             uIAnimator.DrawOutGameObjects();
             virtualKeyboard.OnLetterPressed += HandleLetter;
@@ -49,6 +49,7 @@ namespace Pendu.inputhandler
         }
         private void TriggerGameOver()
         {
+            parallaxLayerAnimator.AnimateToEnd();
             uIAnimator.DrawInGameObjects();
             Debug.Log("GameOverTriggered");
             gameOverPanel.SetActive(true);            
@@ -70,6 +71,7 @@ namespace Pendu.inputhandler
 
         public void ResetGame()
         {
+            parallaxLayerAnimator.AnimateToStart();
             uIAnimator.DrawOutGameObjects();
             errorCount = 0;
             

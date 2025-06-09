@@ -2922,6 +2922,7 @@ MonoBehaviour:
   maxErrors: 10
   wordPicker: {fileID: 199263981}
   splitWordToLetters: {fileID: 759426496}
+  parallaxLayerAnimator: {fileID: 1393614364}
   uIAnimator: {fileID: 629898435}
 --- !u!114 &1283527843
 MonoBehaviour:
@@ -3212,6 +3213,8 @@ MonoBehaviour:
   layers: []
   animationDuration: 1
   endTarget: {fileID: 1695103324}
+  basePos: {x: 0, y: 0, z: 0}
+  endPos: {x: 0, y: 0, z: 0}
   delayFactor: 6
 --- !u!1 &1437384990
 GameObject:

@@ -8,9 +8,8 @@ namespace LayerAnimation
     {
         [SerializeField] private Transform[] layers;
         [SerializeField] private float animationDuration = 2f;
-        [SerializeField] private Transform endTarget;
-        //[SerializeField] private AnimationCurve easeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-        private Vector3 basePos, endPos;
+        [SerializeField] private Transform endTarget;        
+        public Vector3 basePos, endPos;
         [SerializeField] private float delayFactor = 1f;        
 
         void Awake()
@@ -21,11 +20,7 @@ namespace LayerAnimation
             layers = new Transform[transform.childCount];
             for (int i = 0; i < layers.Length; i++)
                 layers[i] = transform.GetChild(i);            
-        }
-        private void Start()
-        {            
-            //AnimateToStart(); //test to rmove
-        }
+        }        
         public void InitLayers(Vector3 target)
         {
             foreach (Transform layer in layers)
