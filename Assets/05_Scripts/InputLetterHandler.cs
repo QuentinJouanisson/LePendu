@@ -43,6 +43,7 @@ namespace Pendu.inputhandler
         {
             parallaxLayerAnimator.AnimateToStart();
             uIAnimator.DrawOutGameObjects();
+            virtualKeyboard.ResetKeyboard();
             virtualKeyboard.OnLetterPressed += HandleLetter;
             gameOverPanel.SetActive(false);
             gameVictoryPanel.SetActive(false);
@@ -71,6 +72,7 @@ namespace Pendu.inputhandler
 
         public void ResetGame()
         {
+            virtualKeyboard.ResetKeyboard();
             parallaxLayerAnimator.AnimateToStart();
             uIAnimator.DrawOutGameObjects();
             errorCount = 0;
@@ -105,6 +107,7 @@ namespace Pendu.inputhandler
 
         public void NextWord()
         {
+            virtualKeyboard.ResetKeyboard();
             uIAnimator.DrawOutGameObjects();
             string previousWord = wordPicker.CurrentWord;
 
@@ -139,7 +142,7 @@ namespace Pendu.inputhandler
             switch (result)
             {
                 case LetterMemory.LetterResult.Correct:
-                    OnCorrectLetter?.Invoke(c);
+                    OnCorrectLetter?.Invoke(c);                    
                     if (letterMemory.IsComplete())
                     {
                         OnWordCompleted?.Invoke();
@@ -150,7 +153,7 @@ namespace Pendu.inputhandler
 
                 case LetterMemory.LetterResult.Incorrect:
                     errorCount++;
-                    OnIncorrectLetter?.Invoke(c);
+                    OnIncorrectLetter?.Invoke(c);                    
                     hangmanManager.IncrementErrors();
                     Debug.Log($"Erreur {errorCount} / {maxErrors}");
                     if(errorCount >= maxErrors)
@@ -162,7 +165,7 @@ namespace Pendu.inputhandler
 
                 case LetterMemory.LetterResult.AlreadyTried:
                     OnAlreadyTriedLetter?.Invoke(c);
-                    //greyout the letter 
+                    //virtualKeyboard.MarkLetterAsUsed(c);
                     break;
             }
         }
