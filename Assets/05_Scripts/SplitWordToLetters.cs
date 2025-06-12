@@ -31,11 +31,10 @@ public class SplitWordToLetters : MonoBehaviour
         chosenWord = word;
         letterMemory.Init(chosenWord);
         SplitWord(chosenWord);
-        InstanciateLetters(chosenWord);
-        //Debug.Log("chosen word is" + chosenWord);
+        InstanciateLetters(chosenWord);    
 
         inputLetterHandler.OnCorrectLetter += RevealLetter;
-        //inputLetterHandler.OnWordCompleted += WordComplete;
+        
     }
     void WordComplete()
     {
@@ -82,12 +81,5 @@ public class SplitWordToLetters : MonoBehaviour
         {
             displayedLetters[index].text = c.ToString();
         }
-    }
-    
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    }   
 }
