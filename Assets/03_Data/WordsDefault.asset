@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: WordsDefault
   m_EditorClassIdentifier: 
   words:
-  - Un
-  - Deux
-  - Trois
+  - chief
+  - bar
+  - sherrif
+  - six-shooter
+  - Anthropocene
+  - barrel

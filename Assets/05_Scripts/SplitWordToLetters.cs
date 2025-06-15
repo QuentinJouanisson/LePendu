@@ -19,7 +19,7 @@ public class SplitWordToLetters : MonoBehaviour
     private string chosenWord;
     private Dictionary<char, List<int>> letterOccurences = new();
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         inputLetterHandler.ResetGame();
@@ -27,7 +27,6 @@ public class SplitWordToLetters : MonoBehaviour
     }
     public void InitNewWord(string word)
     {
-        //string chosenWord = wordPicker.GetRandomWord();
         chosenWord = word;
         letterMemory.Init(chosenWord);
         SplitWord(chosenWord);
@@ -52,11 +51,7 @@ public class SplitWordToLetters : MonoBehaviour
             if (!letterOccurences.ContainsKey(currentChar))
                 letterOccurences[currentChar] = new List<int>();
             letterOccurences [currentChar].Add(i);
-        }
-        //foreach (var pair in letterOccurences)
-        //{
-        //    Debug.Log($"Lettre ' {pair.Key}' aux positions : {string.Join(",", pair.Value)}");
-        //}
+        }        
     }
     private void InstanciateLetters(string word)
     {

@@ -91,8 +91,8 @@ namespace Pendu.inputhandler
             }
             if (virtualKeyboard != null)
             {
-                virtualKeyboard.OnLetterPressed -= HandleLetter; //desabonne du handle
-                virtualKeyboard.OnLetterPressed += HandleLetter; //reabonne
+                virtualKeyboard.OnLetterPressed -= HandleLetter; //desabonne du handle pour virer le bug
+                virtualKeyboard.OnLetterPressed += HandleLetter; //reabonne pour virer le bug
                 virtualKeyboard.SetIntteractable(true);
                 virtualKeyboard.gameObject.SetActive(true);
             }
@@ -121,8 +121,8 @@ namespace Pendu.inputhandler
             }            
             if (virtualKeyboard != null)
             {
-                virtualKeyboard.OnLetterPressed -= HandleLetter; //desabonne du handle
-                virtualKeyboard.OnLetterPressed += HandleLetter; //reabonne
+                virtualKeyboard.OnLetterPressed -= HandleLetter; //desabonne du handle pour virer le bug
+                virtualKeyboard.OnLetterPressed += HandleLetter; //reabonne pour virer le bug
                 virtualKeyboard.SetIntteractable(true);
                 virtualKeyboard.gameObject.SetActive(true);
             }
@@ -165,7 +165,6 @@ namespace Pendu.inputhandler
 
                 case LetterMemory.LetterResult.AlreadyTried:
                     OnAlreadyTriedLetter?.Invoke(c);
-                    //virtualKeyboard.MarkLetterAsUsed(c);
                     break;
             }
         }

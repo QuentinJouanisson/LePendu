@@ -3,8 +3,6 @@ using System;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using Codice.Client.BaseCommands;
-using PlasticGui.WorkspaceWindow.QueryViews.Branches;
 
 namespace Pendu.Keyboard
 {
@@ -20,7 +18,10 @@ namespace Pendu.Keyboard
 
         private GridLayoutGroup _gridLayoutGroup;
         private Dictionary<char, Button> letterButtons = new Dictionary<char, Button>();
-
+        /// <summary>
+        /// sert a donner plus de précisions sur la methode, du contexte.
+        /// </summary>
+        /// <param name="state">interractable</param>
         public void SetIntteractable(bool state)
         {
             foreach(Transform child in keyboardParent)
