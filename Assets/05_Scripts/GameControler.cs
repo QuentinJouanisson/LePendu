@@ -10,10 +10,11 @@ namespace Pendu.gamecontroller
 
     public class GameControler : MonoBehaviour
     {
-        [SerializeField] private string Dictionary;
-        [SerializeField] private int LetterNumber;
-        [SerializeField] private int MaxError;
-        [SerializeField] private int CurrentError;
+        public void QuitGame()
+        {
+            Application.Quit();
+            Debug.Log("Game is quitting");
+        }
 
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created

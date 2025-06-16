@@ -10,7 +10,9 @@ namespace LayerAnimation
         [SerializeField] private float animationDuration = 2f;
         [SerializeField] private Transform endTarget;        
         public Vector3 basePos, endPos;
-        [SerializeField] private float delayFactor = 1f;        
+        [SerializeField] private float delayFactor = 1f;
+        [SerializeField] private AnimationCurve easingCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+        private Dictionary<Transform, Vector3> initialPositions = new Dictionary<Transform, Vector3>();
 
         void Awake()
         {
@@ -63,7 +65,9 @@ namespace LayerAnimation
             float elapsedTime = 0f;
             while (elapsedTime < duration)
             {
-                layer.position = Vector3.Lerp(start, end, EaseInOut(elapsedTime / duration));
+                float t = elapsedTime/duration;
+                float easedT = easingCurve.Evaluate(t);
+                layer.position = Vector3.Lerp(start, end, easedT);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }

@@ -3,6 +3,7 @@ using System;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using audiomanager;
 
 namespace Pendu.Keyboard
 {
@@ -13,6 +14,7 @@ namespace Pendu.Keyboard
         [SerializeField] private RectTransform keyboardParent;
         [SerializeField] private GameObject letterInputButtonPrefab;                
         [SerializeField] private Color alreadyTriedColor = Color.gray;
+        [SerializeField] private AudioManager audioManager;
         private Color defaultColor;
 
 
@@ -62,6 +64,8 @@ namespace Pendu.Keyboard
                 {
                     MarkLetterAsUsed(letter);
                     OnLetterPressed?.Invoke(letter);
+                    audioManager?.PlayKeyboardClick();
+
                 });
             
                 letterButtons[letter] = btn;                
