@@ -59,6 +59,7 @@ namespace Pendu.inputhandler
             virtualKeyboard.SetIntteractable(false);
             virtualKeyboard.gameObject.SetActive(false);
             wordPicker.ResetUsedWords();
+            GameSessionManager.Instance.ResetSession();
         }
         private void TriggerVictory()
         {

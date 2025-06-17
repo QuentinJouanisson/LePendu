@@ -33,7 +33,7 @@ namespace Pendu.wordscontroller
 
             if (availableWords.Count == 0)
             {
-                Debug.Log("tous les mots sont joués, reinit");
+                Debug.Log("tous les mots sont joues, reinit");
                 GameSessionManager.Instance.ResetPlayedWords();
                 availableWords = new List<string>(wordListData.words);
             }
