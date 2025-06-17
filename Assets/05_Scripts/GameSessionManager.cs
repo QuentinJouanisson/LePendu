@@ -1,16 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 namespace Pendu.GameSession
 {
-
-
     public class GameSessionManager : MonoBehaviour
     {
+        [SerializeField] private TextMeshProUGUI scoreText;
         public static GameSessionManager Instance {get; private set; }
 
         public int TotalErrors { get; private set; }
-        public int Score { get; private set; }
+        public int TotalScore { get; private set; }
+        public int CurrentMultiplier { get; private set; } = 1;
         
         public HashSet<string> WordsPlayed { get; private set; } = new HashSet<string>();
        
@@ -26,13 +27,30 @@ namespace Pendu.GameSession
                 Destroy(gameObject);
             }
         }
-
-        public void RegisterVictory(string word, int errors)
+       
+        public void RegisterVictory(string word, int errorsThisWord)
         {
-            Score++;
-            TotalErrors += errors;
+            int uniqueCount = CountUniqueLetters(word);
+            int gained = uniqueCount * CurrentMultiplier;
+
+            TotalScore += gained;
+            TotalErrors += errorsThisWord;
             WordsPlayed.Add(word);
+
+            CurrentMultiplier++;
+            
+        }   
+        public void RegisterGameOver()
+        {
+            CurrentMultiplier = 1;
         }
+        private int CountUniqueLetters(string word)
+        {
+            HashSet<char> set = new();
+            foreach (char c in word.ToUpperInvariant()) set.Add(c);
+            return set.Count;
+        }
+        
         public void RegisterWord(string word)
         {
             WordsPlayed.Add(word);
@@ -47,7 +65,7 @@ namespace Pendu.GameSession
         {
 
             TotalErrors = 0;
-            Score = 0;
+            TotalScore = 0;
             WordsPlayed.Clear();
         }
         public void ResetPlayedWords()
@@ -58,7 +76,10 @@ namespace Pendu.GameSession
         // Update is called once per frame
         void Update()
         {
-
+            if (scoreText != null)
+            {
+                scoreText.text = $"Score : {GameSessionManager.Instance.TotalScore}";
+            }
         }
     }
 }

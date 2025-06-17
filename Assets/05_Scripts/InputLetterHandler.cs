@@ -54,7 +54,8 @@ namespace Pendu.inputhandler
             uIAnimator.DrawInGameObjects();
             Debug.Log("GameOverTriggered");
             gameOverPanel.SetActive(true);            
-            gameVictoryPanel.SetActive(false);            
+            gameVictoryPanel.SetActive(false);
+            GameSessionManager.Instance.RegisterGameOver();
             virtualKeyboard.SetIntteractable(false);
             virtualKeyboard.gameObject.SetActive(false);
             wordPicker.ResetUsedWords();

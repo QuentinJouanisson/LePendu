@@ -30,11 +30,13 @@ namespace LayerAnimation
         }
         public void AnimateToEnd()
         {
+            StopAllCoroutines();
             InitLayers(basePos);
             StartCoroutine(AnimatePosition(basePos, endPos));
         }
         public void AnimateToStart()
         {
+            StopAllCoroutines();
             InitLayers(endPos);
             StartCoroutine(AnimatePosition(endPos, basePos));
         }
