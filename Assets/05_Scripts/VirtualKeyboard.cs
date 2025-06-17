@@ -21,7 +21,7 @@ namespace Pendu.Keyboard
         private GridLayoutGroup _gridLayoutGroup;
         private Dictionary<char, Button> letterButtons = new Dictionary<char, Button>();
         /// <summary>
-        /// sert a donner plus de précisions sur la methode, du contexte.
+        /// etat des boutons
         /// </summary>
         /// <param name="state">interractable</param>
         public void SetIntteractable(bool state)
@@ -37,7 +37,7 @@ namespace Pendu.Keyboard
         }
 
         public Action<char> OnLetterPressed;
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        
         void Start()
         {
             GenerateKeyboard();
